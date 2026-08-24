@@ -1,0 +1,14 @@
+name: native-app
+version: 0.1.0
+mode: bin
+output: build/native-app
+build-dir: build/typephp
+optimize: 2
+
+sources:
+  - vendor/typephp/native-core/src
+  - vendor/typephp/native-core/hosts/console
+  - main.php
+
+ignore:
+  - vendor/typephp/native-core/src/bootstrap.php

@@ -1,0 +1,23 @@
+{
+  "name": "typephp/native-core",
+  "description": "AOT-first, host-neutral native application core for TypePHP and Zend PHP",
+  "type": "library",
+  "keywords": ["typephp", "aot", "native", "application", "daemon", "desktop"],
+  "homepage": "https://github.com/typephp-org/native-core",
+  "license": "MIT",
+  "support": {
+    "issues": "https://github.com/typephp-org/native-core/issues",
+    "source": "https://github.com/typephp-org/native-core"
+  },
+  "require": {
+    "php": ">=8.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "TypePHP\\NativeCore\\": "src/",
+      "TypePHP\\NativeCore\\Host\\Console\\": "hosts/console/",
+      "TypePHP\\NativeCore\\Host\\Daemon\\": "hosts/daemon/",
+      "TypePHP\\NativeCore\\Host\\Windows\\": "hosts/windows/"
+    }
+  }
+}

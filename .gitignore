@@ -1,0 +1,15 @@
+/build/typephp/*
+!/build/typephp/core.yml
+/build/artifacts/
+/build/deps/
+/build/native/
+/build/release/
+/vendor/
+*.exe
+*.dll
+*.lib
+*.exp
+*.obj
+*.pdb
+*.pid
+*.lock

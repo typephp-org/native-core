@@ -1,0 +1,15 @@
+name: aot-integration
+version: 0.1.0
+mode: bin
+output: ../../build/artifacts/aot-integration
+build-dir: ../../build/typephp/aot-integration
+optimize: 0
+no-progress: true
+
+sources:
+  - ../../src
+  - ../../hosts/windows
+  - main.php
+
+ignore:
+  - ../../src/bootstrap.php

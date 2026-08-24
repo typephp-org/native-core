@@ -1,0 +1,16 @@
+name: daemon-smoke
+version: 0.1.0
+mode: bin
+output: ../../build/artifacts/daemon-smoke
+build-dir: ../../build/typephp/daemon-smoke
+optimize: 0
+no-progress: true
+
+sources:
+  - ../../src
+  - ../../hosts/daemon
+  - main.php
+
+ignore:
+  - ../../src/bootstrap.php
+  - ../../hosts/daemon/PcntlSignalSource.php

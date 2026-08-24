@@ -1,0 +1,16 @@
+name: desktop-window-spike
+version: 0.1.0
+mode: bin
+output: ../../build/artifacts/desktop-window-spike
+build-dir: ../../build/typephp/desktop-window-spike
+optimize: 0
+no-progress: true
+
+sources:
+  - ../../src
+  - ../../hosts/windows
+  - main.php
+  - cpp-src
+
+ignore:
+  - ../../src/bootstrap.php

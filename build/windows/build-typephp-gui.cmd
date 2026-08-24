@@ -1,0 +1,48 @@
+@echo off
+setlocal
+
+if "%~2"=="" (
+    echo Usage: build-typephp-gui.cmd PROJECT_YML OUTPUT_EXE
+    exit /b 2
+)
+
+for %%I in ("%~1") do set "PROJECT_YML=%%~fI"
+for %%I in ("%~2") do (
+    set "OUTPUT_EXE=%%~fI"
+    set "OUTPUT_DIR=%%~dpI"
+)
+if not defined TYPEPHP_HOME set "TYPEPHP_HOME=D:\DevTools\TypePHP\v0.2.3"
+if not defined PHP_HOME set "PHP_HOME=%TYPEPHP_HOME%"
+if not defined PHPX_HOME set "PHPX_HOME=%TYPEPHP_HOME%\phpx"
+if not defined VS_BUILD_TOOLS set "VS_BUILD_TOOLS=D:\DevTools\VisualStudio\2022\BuildTools"
+
+if not exist "%PROJECT_YML%" (
+    echo ERROR: Project file not found: %PROJECT_YML%
+    exit /b 2
+)
+if not exist "%TYPEPHP_HOME%\tpc.exe" (
+    echo ERROR: TypePHP compiler not found: %TYPEPHP_HOME%\tpc.exe
+    exit /b 2
+)
+
+call "%VS_BUILD_TOOLS%\VC\Auxiliary\Build\vcvars64.bat" >nul
+if errorlevel 1 exit /b %errorlevel%
+
+if not exist "%OUTPUT_DIR%" mkdir "%OUTPUT_DIR%"
+if exist "%OUTPUT_EXE%" del /q "%OUTPUT_EXE%"
+
+pushd "%TYPEPHP_HOME%"
+"%TYPEPHP_HOME%\tpc.exe" "%PROJECT_YML%" --no-color
+set "BUILD_EXIT=%ERRORLEVEL%"
+popd
+if not "%BUILD_EXIT%"=="0" exit /b %BUILD_EXIT%
+if not exist "%OUTPUT_EXE%" (
+    echo ERROR: TypePHP did not produce the expected GUI executable: %OUTPUT_EXE%
+    exit /b 3
+)
+
+editbin /nologo /SUBSYSTEM:WINDOWS "%OUTPUT_EXE%"
+if errorlevel 1 exit /b %errorlevel%
+
+echo GUI executable: %OUTPUT_EXE%
+exit /b 0

@@ -1,0 +1,20 @@
+name: TypePHP Windows
+
+on:
+  workflow_dispatch:
+
+jobs:
+  aot:
+    runs-on: [self-hosted, Windows, X64, typephp]
+    steps:
+      - uses: actions/checkout@v4
+      - shell: cmd
+        run: build\windows\run-tests.cmd
+      - shell: cmd
+        run: build\windows\build-typephp.cmd
+      - shell: cmd
+        run: build\windows\build-aot-integration.cmd
+      - shell: cmd
+        run: build\windows\build-daemon-smoke.cmd
+      - shell: cmd
+        run: build\windows\build-desktop-spike.cmd

@@ -1,0 +1,15 @@
+name: native-core-smoke
+version: 0.1.0-alpha.1
+mode: bin
+output: ../artifacts/native-core-smoke
+build-dir: core
+optimize: 0
+no-progress: true
+
+sources:
+  - ../../src
+  - ../../hosts/console
+  - ../../examples/hello-console/main.php
+
+ignore:
+  - ../../src/bootstrap.php
