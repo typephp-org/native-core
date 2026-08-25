@@ -1,5 +1,5 @@
 {
-  "name": "typephp/native-core",
+  "name": "typephp-org/native-core",
   "description": "AOT-first, host-neutral native application core for TypePHP and Zend PHP",
   "type": "library",
   "keywords": ["typephp", "aot", "native", "application", "daemon", "desktop"],

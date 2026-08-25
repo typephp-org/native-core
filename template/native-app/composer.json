@@ -2,7 +2,7 @@
   "name": "app/native-app",
   "type": "project",
   "require": {
-    "typephp/native-core": "^0.1@alpha"
+    "typephp-org/native-core": "^0.1@alpha"
   },
   "autoload": {
     "psr-4": {

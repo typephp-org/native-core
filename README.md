@@ -16,7 +16,7 @@ Web MVC/API framework. An HTTP host can be built on top, but routing,
 request/response abstractions, middleware, and a production server are outside
 the current scope.
 
-Current release line: `0.1.0-alpha.1`. Public APIs are still alpha.
+Current release line: `0.1.0-alpha.2`. Public APIs are still alpha.
 
 ## Why TypePHP?
 
@@ -62,7 +62,7 @@ enter `src/`.
 Install from Packagist:
 
 ```bash
-composer require typephp/native-core:^0.1@alpha
+composer require typephp-org/native-core:^0.1@alpha
 ```
 
 The Composer package contains PHP source only. It does not bundle the TypePHP

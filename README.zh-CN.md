@@ -13,7 +13,7 @@ Native Core 提供应用生命周期和可移植的服务契约，Host 负责进
 集成。它并不是现成的 Web MVC/API 框架：可以在 Core 之上实现 HTTP Host，
 但 Router、Request/Response、Middleware 和生产服务端不在当前范围内。
 
-当前版本线：`0.1.0-alpha.1`。公共 API 仍处于 alpha 阶段。
+当前版本线：`0.1.0-alpha.2`。公共 API 仍处于 alpha 阶段。
 
 ## 为什么是 TypePHP？
 
@@ -52,7 +52,7 @@ Application / Host adapter  ->  Native Core
 通过 Packagist 安装：
 
 ```bash
-composer require typephp/native-core:^0.1@alpha
+composer require typephp-org/native-core:^0.1@alpha
 ```
 
 Composer 包只包含 PHP 源码，不包含 TypePHP 编译器、PHPX、PHP Embed、原生

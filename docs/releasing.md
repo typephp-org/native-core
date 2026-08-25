@@ -22,20 +22,24 @@ Create the optional project source archive with an explicit version matching
 the immutable Git tag:
 
 ```powershell
-php build/package.php 0.1.0-alpha.1
+php build/package.php 0.1.0-alpha.2
 ```
 
 This archive is a verification convenience, not an artifact Packagist needs.
 Composer/Packagist resolves the package from VCS tags.
 
-## First alpha release
+## Next alpha release
+
+`v0.1.0-alpha.1` was tagged before the Composer package changed from
+`typephp/native-core` to `typephp-org/native-core`. Keep that tag immutable;
+`v0.1.0-alpha.2` is the first tag intended for the new Packagist package name.
 
 Keep version selection and tag creation as an explicit maintainer decision. Once
 the release gate is green:
 
 ```bash
-git tag -a v0.1.0-alpha.1 -m "TypePHP Native Core v0.1.0-alpha.1"
-git push origin v0.1.0-alpha.1
+git tag -a v0.1.0-alpha.2 -m "TypePHP Native Core v0.1.0-alpha.2"
+git push origin v0.1.0-alpha.2
 ```
 
 For the current source-only alpha, an annotated tag plus `CHANGELOG.md` is the
@@ -62,11 +66,11 @@ There is no release file to upload to Packagist.
    `https://github.com/typephp-org/native-core`.
 4. Grant the Packagist GitHub application access to the `typephp-org`
    organization, or configure Packagist's documented GitHub push webhook.
-5. Confirm that `typephp/native-core` exposes `0.1.0-alpha.1`.
+5. Confirm that `typephp-org/native-core` exposes `0.1.0-alpha.2`.
 6. Verify from a clean directory:
 
    ```bash
-   composer require typephp/native-core:^0.1@alpha
+   composer require typephp-org/native-core:^0.1@alpha
    ```
 
 The first repository submission is manual. With GitHub synchronization enabled,
