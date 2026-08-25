@@ -57,6 +57,22 @@ Application / Host adapter  ->  Native Core
 Platform handles and Win32, SDL, WebView, or daemon-specific behavior never
 enter `src/`.
 
+## Platform support
+
+Native Core is cross-platform at the Core boundary. Native executables and
+platform adapters are still built and verified per operating system.
+
+| Area | Portability | Current evidence |
+|---|---|---|
+| Host-neutral Core, Console, and Worker | OS-neutral by contract | Zend PHP 8.4 CI on Ubuntu and Windows; TypePHP AOT verified on Windows x64 |
+| Foreground Daemon | Core loop is OS-neutral; signals and service integration are adapters | Zend regressions on Ubuntu/Windows and a Windows TypePHP smoke; POSIX signal behavior is not yet verified |
+| Windows Desktop Host | Windows only | Zend contract regressions and a real TypePHP/Win32 desktop smoke |
+| TypePHP AOT | TypePHP targets Linux, macOS, and Windows; each platform produces its own native artifact | This repository currently has native runtime evidence for Windows x64 only |
+
+macOS and Linux TypePHP builds are intended and supported by the architecture,
+but they are not marked confirmed here until the matching build and runtime
+smokes have actually run.
+
 ## Installation
 
 Install from Packagist:
@@ -132,14 +148,20 @@ template/             Minimal native application starter
 
 ## Verification
 
-Zend PHP:
+Portable Zend PHP verification on Linux, macOS, or Windows:
 
-```powershell
+```bash
+composer install
+php tests/lint.php
+php tests/run.php
+php tests/composer-autoload.php
 php examples/hello-console/run-zend.php
-build\windows\run-tests.cmd
+php examples/worker/run-zend.php
 ```
 
-TypePHP AOT on the currently verified Windows toolchain:
+On Windows, `build\windows\run-tests.cmd` is a convenience wrapper around the
+lint and regression commands. The following additional scripts exercise the
+currently verified Windows TypePHP AOT toolchain:
 
 ```powershell
 build\windows\build-typephp.cmd

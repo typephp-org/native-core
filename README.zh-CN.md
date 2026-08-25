@@ -47,6 +47,21 @@ Application / Host adapter  ->  Native Core
 
 平台句柄以及 Win32、SDL、WebView 或 Daemon 专属行为不会进入 `src/`。
 
+## 平台支持
+
+Native Core 在 Core 边界上是跨平台的；原生可执行文件和平台适配器仍需按操作
+系统分别构建与验证。
+
+| 范围 | 可移植性 | 当前实证 |
+|---|---|---|
+| Host-neutral Core、Console、Worker | 契约上与操作系统无关 | Zend PHP 8.4 CI 覆盖 Ubuntu/Windows；TypePHP AOT 已验证 Windows x64 |
+| 前台 Daemon | Core 循环与系统无关；Signal 和 Service 集成属于适配器 | Ubuntu/Windows Zend 回归与 Windows TypePHP smoke 已确认；POSIX Signal 尚未验证 |
+| Windows Desktop Host | 仅 Windows | Zend 契约回归与真实 TypePHP/Win32 Desktop smoke |
+| TypePHP AOT | TypePHP 面向 Linux、macOS、Windows，各平台分别产出原生文件 | 本仓库目前只有 Windows x64 的原生运行实证 |
+
+架构支持后续在 macOS 和 Linux 上使用 TypePHP；但在对应构建和运行 smoke 真正
+执行前，本项目不会把它们标记为已确认。
+
 ## 安装
 
 通过 Packagist 安装：
@@ -121,14 +136,19 @@ template/             最小原生应用 starter
 
 ## 验证
 
-Zend PHP：
+Linux、macOS、Windows 通用的 Zend PHP 验证命令：
 
-```powershell
+```bash
+composer install
+php tests/lint.php
+php tests/run.php
+php tests/composer-autoload.php
 php examples/hello-console/run-zend.php
-build\windows\run-tests.cmd
+php examples/worker/run-zend.php
 ```
 
-当前已验证的 Windows TypePHP AOT 工具链：
+在 Windows 上，`build\windows\run-tests.cmd` 只是 lint 与回归测试的便捷封装。
+以下额外脚本用于当前已经验证的 Windows TypePHP AOT 工具链：
 
 ```powershell
 build\windows\build-typephp.cmd
