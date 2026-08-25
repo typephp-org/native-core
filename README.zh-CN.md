@@ -3,7 +3,7 @@
 [English](README.md) | [简体中文](README.zh-CN.md)
 
 [![CI](https://github.com/typephp-org/native-core/actions/workflows/ci.yml/badge.svg)](https://github.com/typephp-org/native-core/actions/workflows/ci.yml)
-[![PHP](https://img.shields.io/badge/PHP-%3E%3D%208.2-777BB4.svg)](composer.json)
+[![PHP](https://img.shields.io/badge/PHP-%3E%3D%208.4-777BB4.svg)](composer.json)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 一个面向 TypePHP 与 Zend PHP 的 AOT-first、Host-neutral 应用内核，用于构建
@@ -36,7 +36,8 @@ Native Core 提供应用生命周期和可移植的服务契约，Host 负责进
   Channel 等小型可替换端口。
 - AOT-friendly API：具名回调对象、具体类型、显式 source，不做运行时代码生成。
 - Console、前台 Daemon 和可复用的 Windows Desktop Host 契约。
-- 除 PHP `>=8.2` 外没有 Composer 运行时依赖。
+- 要求 PHP `>=8.4`，与当前 TypePHP 编译器及生成程序的最低要求一致；没有
+  其他 Composer 运行时依赖。
 
 依赖方向始终是：
 

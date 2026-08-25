@@ -31,6 +31,8 @@ Build scripts honor `TYPEPHP_HOME`, `PHP_HOME`, `PHPX_HOME` and
 
 ## Dual-runtime rules
 
+- The current TypePHP compiler and generated programs require PHP 8.4 or newer.
+  Native Core uses the same minimum for Zend development and Composer installs.
 - TypePHP AOT calls global `main()`; Zend does not. Zend adapters call it
   explicitly.
 - AOT consumes every PHP source listed in `project.yml`; it must not depend on

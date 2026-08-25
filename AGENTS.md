@@ -26,6 +26,8 @@ belongs in `docs/`.
 
 ## TypePHP AOT constraints
 
+- PHP 8.4 is the minimum supported version for the compiler, generated
+  programs, Zend verification and Composer consumers.
 - AOT calls global `main()`; Zend does not. Each example therefore keeps an AOT
   `main.php` and a small Zend `run-zend.php` adapter.
 - AOT sources are explicitly listed in `project.yml`. Do not rely on runtime

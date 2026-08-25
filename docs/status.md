@@ -12,7 +12,7 @@
 - Minimal Zend examples and real TypePHP/Windows Console, Daemon, lifecycle and
   Win32 Desktop smokes.
 - Composer PSR-4 package metadata, native app template, public API docs and
-  Windows/Linux Zend plus self-hosted TypePHP workflow definitions.
+  Windows/Linux Zend PHP 8.4 plus self-hosted TypePHP workflow definitions.
 
 ## Not declared complete
 

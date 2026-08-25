@@ -6,7 +6,7 @@ not release promises.
 
 | Capability | Status | Evidence / boundary |
 |---|---|---|
-| Zend PHP lint/tests | confirmed on Windows | PHP 8.4.24, 38 assertions |
+| Zend PHP 8.4 lint/tests | confirmed on Windows and CI-configured on Linux | PHP 8.4.24 locally, 38 assertions |
 | Composer PSR-4 autoload | confirmed | Core and Windows Host load from `vendor/autoload.php` |
 | Hello Console on Zend | confirmed | structured log, exit 0 |
 | Worker cancellation | confirmed | 3 ticks, exit 0 |

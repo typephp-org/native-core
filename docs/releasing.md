@@ -10,12 +10,13 @@ Native Core uses Semantic Versioning.
 
 A release must pass:
 
-1. Zend lint and tests on Windows/Linux.
+1. Zend PHP 8.4 lint and tests on Windows/Linux.
 2. TypePHP Windows Core build and AOT integration run.
 3. Desktop Spike compile and smoke close.
 4. Dependency and license inventory review.
 5. Package generation and SHA-256 manifest verification.
-6. `CHANGELOG.md` and public documentation review.
+6. `composer.json` still requires PHP 8.4 or newer, matching TypePHP.
+7. `CHANGELOG.md` and public documentation review.
 
 Create the optional project source archive with an explicit version matching
 the immutable Git tag:
@@ -35,13 +36,16 @@ the release gate is green:
 ```bash
 git tag -a v0.1.0-alpha.1 -m "TypePHP Native Core v0.1.0-alpha.1"
 git push origin v0.1.0-alpha.1
-gh release create v0.1.0-alpha.1 --verify-tag --generate-notes --prerelease
 ```
 
-GitHub automatically exposes source ZIP and tar.gz archives for the tag. A
-GitHub Actions workflow may run the final `gh release create` step on tag pushes
-with `contents: write`; it does not need the TypePHP compiler unless that same
-workflow is also expected to rebuild or test native artifacts.
+For the current source-only alpha, an annotated tag plus `CHANGELOG.md` is the
+release record. Packagist consumes the tag directly, and GitHub exposes source
+ZIP and tar.gz archives for tags without requiring a GitHub Release.
+
+Do not maintain a separate GitHub Release yet. Add one when the project begins
+shipping native binary assets, needs a dedicated human-facing announcement, or
+reaches a milestone such as beta or 1.0. It can then be generated from an
+existing tag without changing the Composer package.
 
 For this source-only Composer package, TypePHP AOT validation remains a separate
 manual workflow on the pre-provisioned self-hosted Windows runner. Do not commit

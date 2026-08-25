@@ -3,7 +3,7 @@
 [English](README.md) | [简体中文](README.zh-CN.md)
 
 [![CI](https://github.com/typephp-org/native-core/actions/workflows/ci.yml/badge.svg)](https://github.com/typephp-org/native-core/actions/workflows/ci.yml)
-[![PHP](https://img.shields.io/badge/PHP-%3E%3D%208.2-777BB4.svg)](composer.json)
+[![PHP](https://img.shields.io/badge/PHP-%3E%3D%208.4-777BB4.svg)](composer.json)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
 An AOT-first, host-neutral application core for building CLI tools, workers,
@@ -45,7 +45,8 @@ The result is a practical split:
 - AOT-friendly APIs: named callback objects, concrete types, explicit sources,
   and no runtime code generation.
 - Console, foreground Daemon, and reusable Windows Desktop host contracts.
-- Zero runtime Composer dependencies beyond PHP `>=8.2`.
+- PHP `>=8.4`, matching the minimum required by the current TypePHP compiler
+  and generated programs, with no other runtime Composer dependencies.
 
 Dependency direction is always:
 
