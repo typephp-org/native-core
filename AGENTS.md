@@ -91,11 +91,10 @@ Zend tests, Windows TypePHP `bin` builds, AOT lifecycle integration, the
 foreground Daemon smoke test, and the reusable Win32 Desktop Host are confirmed.
 Linux TypePHP, POSIX signal runtime behavior, Windows Service, TypePHP
 `lib`/`ext`, remote CI, and a 24-72 hour stability run are not confirmed.
-Official docs now state that TypePHP is GPL and may be used commercially, but
-the exact GPL version is not yet stated and the locally tested preview package
-still carries contrary non-production terms. Treat that installed binary as
-non-production until an explicitly licensed release is obtained; the Core's
-MIT license does not override compiler/runtime terms.
+TypePHP project maintainer Han Tianfeng has confirmed that TypePHP is GPL open
+source. Native Core is independently MIT and does not redistribute the compiler
+or runtime toolchain. Record the exact toolchain release and checksum, preserve
+its bundled notices, and keep compiler/runtime terms separate from Core.
 
 Read `docs/architecture.md`, `docs/typephp-toolchain.md`, and
 `docs/capability-matrix.md` before changing architecture or AOT policy.

@@ -3,11 +3,14 @@ name: TypePHP Windows
 on:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   aot:
     runs-on: [self-hosted, Windows, X64, typephp]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - shell: cmd
         run: build\windows\run-tests.cmd
       - shell: cmd

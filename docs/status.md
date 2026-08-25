@@ -21,8 +21,8 @@
 - Linux/macOS TypePHP, POSIX signals, Windows Service and TypePHP `lib`/`ext`
   modes do not have matching runtime evidence here.
 - The stability harness has not completed a 24-72 hour production-style run.
-- Production use requires an explicitly licensed TypePHP release; the locally
-  tested preview binary remains non-production.
+- Public CI does not provision the TypePHP toolchain yet; native validation
+  currently uses a separately installed self-hosted Windows runner.
 
 ## Reproduce
 

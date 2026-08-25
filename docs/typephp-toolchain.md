@@ -1,6 +1,6 @@
 # TypePHP toolchain boundary
 
-Investigation date: 2026-08-20.
+Investigation updated: 2026-08-25.
 
 Primary references:
 
@@ -68,14 +68,11 @@ replacement and runtime evidence.
 
 ## Licensing
 
-Official documentation changed on 2026-08-17 to say TypePHP is GPL, permits
-commercial use and may be redistributed, but it does not name the GPL version
-or attach a complete license to the documentation repository. The locally
-tested preview package still contains terms limiting it to evaluation,
-testing and learning and prohibiting production/commercial deployment.
+TypePHP project maintainer Han Tianfeng has confirmed that TypePHP is GPL open
+source. Native Core is independently MIT licensed and deliberately does not
+bundle the TypePHP compiler, PHPX, PHP Embed, or generated runtime dependencies.
 
-Native Core source is MIT licensed, but that does not relicense the compiler,
-PHPX, PHP Embed or generated runtime dependencies. Before production or binary
-redistribution, obtain a TypePHP release carrying its own explicit license,
-record its version/checksum, review bundled notices and repeat native/stability
-verification.
+Use each toolchain component under the license shipped with its concrete
+release. For reproducible native builds and binary redistribution, record the
+exact TypePHP version and checksum, preserve bundled notices, and repeat native
+and stability verification for that release.

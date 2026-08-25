@@ -85,7 +85,7 @@ Before describing this project as a deployable API framework, require:
 4. database connection lifecycle/pooling and graceful shutdown behavior;
 5. native smoke tests on every advertised OS/CPU package;
 6. load, leak, restart, TLS/reverse-proxy and 24-72 hour stability evidence;
-7. an explicitly licensed TypePHP release and a complete third-party notice.
+7. a pinned TypePHP toolchain release and a complete third-party notice.
 
 Official references: [TypePHP docs source](https://github.com/swoole/typephp-docs),
 [FAQ/licensing](https://github.com/swoole/typephp-docs/blob/master/question.md),

@@ -28,4 +28,4 @@ not release promises.
 | TypePHP `lib` and `ext` modes | unverified | help output only; this repository verifies `bin` mode |
 | Linux/macOS TypePHP build | unverified | current native runtime evidence is Windows x64 only |
 | 24-72 hour RSS/resource run | unverified | only the short stability harness has run |
-| production/commercial TypePHP use | license boundary unresolved | official docs say GPL and allow commercial use, but do not state a GPL version; the locally tested preview package carries contrary non-production terms |
+| TypePHP toolchain distribution | separated from this package | TypePHP is GPL; Native Core is MIT and does not redistribute the compiler, PHPX, PHP Embed or runtime DLLs |
