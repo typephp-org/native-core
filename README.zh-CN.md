@@ -70,6 +70,20 @@ Native Core 在 Core 边界上是跨平台的；原生可执行文件和平台�
 composer require typephp-org/native-core:^0.1@alpha
 ```
 
+可以直接生成同时支持 Zend 开发与 TypePHP AOT 的 Worker 项目：
+
+```bash
+vendor/bin/native new:worker mail-worker MailWorker
+cd mail-worker
+composer install
+php run-zend.php
+vendor/bin/native doctor
+```
+
+生成结果包含业务 Worker、Zend 入口、AOT `main()` 和显式 TypePHP source
+清单。`doctor` 会检查 PHP 8.4、入口函数、source 路径以及已配置的
+`TYPEPHP_HOME`。
+
 Composer 包只包含 PHP 源码，不包含 TypePHP 编译器、PHPX、PHP Embed、原生
 运行库或构建工具。TypePHP 项目需要在 `project.yml` 中显式列出 Core 与 Host
 源码。
@@ -120,6 +134,7 @@ main();
 |---|---|---|
 | Console | 命令和一次性工具 | Program 返回退出码。 |
 | Daemon | 前台 Worker 与服务管理器托管的进程 | 长任务观察协作式取消；服务安装由外部负责。 |
+| Worker Kit | 具备韧性的常驻任务 | 类型化 continue/retry/stop、指数退避、失败上限和可查询健康状态。 |
 | Windows Desktop | Win32 桌面应用循环 | 应用通过 `WindowsDesktopProgram` 持有窗口、消息、渲染和原生资源。 |
 
 ## 项目结构

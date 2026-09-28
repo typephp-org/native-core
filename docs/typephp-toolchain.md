@@ -1,6 +1,6 @@
 # TypePHP toolchain boundary
 
-Investigation updated: 2026-08-25.
+Investigation updated: 2026-09-28.
 
 Primary references:
 
@@ -14,18 +14,26 @@ Primary references:
 - [C++ interop](https://swoole.com/aot/docs/cxx)
 - [distribution](https://swoole.com/aot/docs/best_practice)
 - [official repository](https://github.com/swoole/typephp)
+- [v0.9.3 release](https://github.com/swoole/typephp/releases/tag/v0.9.3)
 
 ## Confirmed local toolchain
 
 | Item | Observed value |
 |---|---|
-| Configured install alias | `D:\DevTools\TypePHP\v0.2.3` |
-| Compiler reported version | TypePHP AOT `v0.5.0` |
-| Embedded PHP | 8.4.24, ZTS, Visual C++ 2022, x64 |
+| Configured install directory | `D:\DevTools\TypePHP` |
+| Compiler reported version | TypePHP AOT `v0.9.3` |
+| Official release asset | `tpc_v0.9.3_windows_x64_php8.4.26-zts.zip` |
+| Official release asset SHA-256 | `308bde232ea1d25789d6a3a5ed13880298c1b707ef5f0d1b307ef029c2655273` (verified locally) |
+| Embedded PHP | 8.4.26, ZTS, Visual C++ 2022, x64 |
 | C++ compiler | MSVC 19.44.35228, x64, C++17 |
 | Native mode exercised | `bin` on Windows x64 |
 
-The install directory is a local alias, not the reported compiler version.
+The Windows release archive contains the matching `tpc.exe`, PHP, PHPX, SDK,
+license files and notices. Its local SHA-256 matches the official release
+asset digest. The toolchain is installed outside this repository and is not
+part of the Composer package or source archive.
+
+The install directory is a local location, not the reported compiler version.
 Build scripts honor `TYPEPHP_HOME`, `PHP_HOME`, `PHPX_HOME` and
 `VS_BUILD_TOOLS`; applications must not bake those local paths into PHP APIs.
 
@@ -63,6 +71,12 @@ compiler, verifies that a new executable exists and applies the Windows PE
 subsystem. This is necessary because a failed compiler invocation has been
 observed returning exit code 0. Native release validation must run the newly
 created artifact rather than trusting compiler status alone.
+
+Embedded PHP programs can also report an Opcache ASLR startup fatal error while
+returning exit code 0 when another embedded process occupies its preferred
+shared-memory address. Windows runtime gates use an isolated file-cache
+fallback and require an application-specific success marker; artifact presence
+and process exit status alone are not accepted as runtime evidence.
 
 The tested compiler may print an embedded-path permission warning during an
 otherwise successful build. Report it, but judge success from artifact

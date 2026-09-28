@@ -2,29 +2,28 @@
 
 use TypePHP\NativeCore\Application\ApplicationContext;
 use TypePHP\NativeCore\Application\NativeApplication;
-use TypePHP\NativeCore\Host\Daemon\DaemonHost;
-use TypePHP\NativeCore\Host\Daemon\DaemonWorker;
+use TypePHP\NativeCore\Host\Worker\Worker;
+use TypePHP\NativeCore\Host\Worker\WorkerHost;
+use TypePHP\NativeCore\Host\Worker\WorkResult;
 use TypePHP\NativeCore\Logging\JsonLineLogger;
-use TypePHP\NativeCore\Signals\NoopSignalSource;
-use TypePHP\NativeCore\Time\SystemSleeper;
 
-final class ExampleDaemonWorker implements DaemonWorker
+final class ExampleDaemonWorker implements Worker
 {
     private int $ticks = 0;
 
-    public function tick(ApplicationContext $context): void
+    public function handle(ApplicationContext $context): WorkResult
     {
         $this->ticks++;
         $context->logger()->log('info', 'daemon tick', ['iteration' => $this->ticks]);
         if ($this->ticks >= 3) {
-            $context->cancellation()->requestCancellation();
+            return WorkResult::stop();
         }
+        return WorkResult::continueAfter(10);
     }
 }
 
 function main(): void
 {
     $application = NativeApplication::configure()->withLogger(new JsonLineLogger())->build();
-    $host = new DaemonHost(new ExampleDaemonWorker(), new NoopSignalSource(), new SystemSleeper(), 10);
-    $application->run($host);
+    $application->run(WorkerHost::defaults(new ExampleDaemonWorker()));
 }

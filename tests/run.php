@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../src/bootstrap.php';
 require_once __DIR__ . '/../hosts/bootstrap.php';
+require_once __DIR__ . '/../tools/NativeCli.php';
 
 use TypePHP\NativeCore\Application\Application;
 use TypePHP\NativeCore\Application\ApplicationContext;
@@ -24,9 +25,15 @@ use TypePHP\NativeCore\Module\Module;
 use TypePHP\NativeCore\Module\ModuleApi;
 use TypePHP\NativeCore\Host\Windows\WindowsDesktopHost;
 use TypePHP\NativeCore\Host\Windows\WindowsDesktopProgram;
+use TypePHP\NativeCore\Host\Worker\Worker;
+use TypePHP\NativeCore\Host\Worker\WorkerHealth;
+use TypePHP\NativeCore\Host\Worker\WorkerHost;
+use TypePHP\NativeCore\Host\Worker\WorkerPolicy;
+use TypePHP\NativeCore\Host\Worker\WorkResult;
 use TypePHP\NativeCore\Process\FileLock;
 use TypePHP\NativeCore\Services\ServiceFactory;
 use TypePHP\NativeCore\Services\ServiceRegistry;
+use TypePHP\NativeCore\Signals\NoopSignalSource;
 use TypePHP\NativeCore\Time\BlockingScheduler;
 use TypePHP\NativeCore\Time\MonotonicClock;
 use TypePHP\NativeCore\Time\ScheduledTask;
@@ -170,7 +177,41 @@ final class FixedMonotonicClock implements MonotonicClock
 final class NoWaitSleeper implements Sleeper
 {
     public int $calls = 0;
-    public function sleepMilliseconds(int $milliseconds): void { $this->calls++; }
+    /** @var array<int, int> */
+    public array $delays = [];
+    public function sleepMilliseconds(int $milliseconds): void
+    {
+        $this->calls++;
+        $this->delays[] = $milliseconds;
+    }
+}
+
+final class ScriptedWorker implements Worker
+{
+    private int $run = 0;
+
+    public function handle(ApplicationContext $context): WorkResult
+    {
+        $this->run++;
+        if ($this->run === 1) {
+            return WorkResult::retry('queue unavailable');
+        }
+        if ($this->run === 2) {
+            return WorkResult::retry('queue still unavailable');
+        }
+        if ($this->run === 3) {
+            return WorkResult::next();
+        }
+        return WorkResult::stop();
+    }
+}
+
+final class ThrowingWorker implements Worker
+{
+    public function handle(ApplicationContext $context): WorkResult
+    {
+        throw new RuntimeException('worker crashed');
+    }
 }
 
 final class CancellingTask implements ScheduledTask
@@ -209,6 +250,28 @@ final class RecordingWindowsDesktopProgram implements WindowsDesktopProgram
 }
 
 $suite = new TestSuite();
+
+$cli = new NativeCli();
+ob_start();
+$doctorExit = $cli->run(['native', 'doctor', __DIR__ . '/../examples/daemon']);
+$doctorOutput = (string) ob_get_clean();
+$suite->same(0, $doctorExit, 'native doctor accepts the worker example');
+$suite->truth(strpos($doctorOutput, 'READY') !== false, 'native doctor reports readiness');
+
+$generatedDirectory = __DIR__ . '/../build/test-generated-worker-' . getmypid();
+ob_start();
+$generateExit = $cli->run(['native', 'new:worker', $generatedDirectory, 'MailWorker']);
+ob_end_clean();
+$suite->same(0, $generateExit, 'native CLI generates a worker project');
+$suite->truth(is_file($generatedDirectory . '/src/MailWorker.php'), 'worker project contains business worker');
+$suite->truth(is_file($generatedDirectory . '/project.yml'), 'worker project contains explicit AOT manifest');
+unlink($generatedDirectory . '/src/MailWorker.php');
+unlink($generatedDirectory . '/composer.json');
+unlink($generatedDirectory . '/main.php');
+unlink($generatedDirectory . '/run-zend.php');
+unlink($generatedDirectory . '/project.yml');
+rmdir($generatedDirectory . '/src');
+rmdir($generatedDirectory);
 
 $registry = new ServiceRegistry();
 $registry->register('plain', new PlainFactory());
@@ -354,6 +417,45 @@ $task = new CancellingTask();
 $iterations = (new BlockingScheduler($sleeper))->run($task, $context, 1, 0);
 $suite->same(3, $iterations, 'scheduler observes cancellation');
 $suite->same(2, $sleeper->calls, 'scheduler waits between ticks');
+
+$workerSleeper = new NoWaitSleeper();
+$workerHealth = new WorkerHealth();
+$workerLogger = new CaptureLogger();
+$workerHost = new WorkerHost(
+    new ScriptedWorker(),
+    new WorkerPolicy(5, 10, 100, 5),
+    new NoopSignalSource(),
+    $workerSleeper,
+    $workerHealth
+);
+$workerApplication = NativeApplication::configure()->withLogger($workerLogger)->build();
+$suite->same(0, $workerApplication->run($workerHost), 'worker exits cleanly on stop result');
+$suite->same([10, 20, 5], $workerSleeper->delays, 'worker applies exponential retry and idle delays');
+$suite->same(1, $workerHealth->successfulRuns(), 'worker records successful work');
+$suite->same(2, $workerHealth->totalFailures(), 'worker records retry attempts');
+$suite->same(0, $workerHealth->consecutiveFailures(), 'successful work resets consecutive failures');
+$suite->same(WorkerHealth::STOPPED, $workerHealth->state(), 'worker health reaches stopped state');
+
+$failedWorkerSleeper = new NoWaitSleeper();
+$failedWorkerHealth = new WorkerHealth();
+$failedWorkerLogger = new CaptureLogger();
+$failedWorkerHost = new WorkerHost(
+    new ThrowingWorker(),
+    new WorkerPolicy(0, 1, 2, 2),
+    new NoopSignalSource(),
+    $failedWorkerSleeper,
+    $failedWorkerHealth
+);
+$failedWorkerApplication = NativeApplication::configure()->withLogger($failedWorkerLogger)->build();
+$suite->same(1, $failedWorkerApplication->run($failedWorkerHost), 'worker failure limit returns non-zero');
+$suite->same([1], $failedWorkerSleeper->delays, 'worker stops retrying at the configured failure limit');
+$suite->same(WorkerHealth::FAILED, $failedWorkerHealth->state(), 'worker failure limit marks health failed');
+$suite->same('worker crashed', $failedWorkerHealth->lastError(), 'worker health keeps the last failure');
+$suite->same(
+    ['warning:worker retry scheduled', 'error:worker failure limit reached'],
+    $failedWorkerLogger->messages,
+    'worker logs retry and terminal failure'
+);
 
 $channel = new InMemoryChannel();
 $channel->send('ping');

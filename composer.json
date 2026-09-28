@@ -9,6 +9,7 @@
     "issues": "https://github.com/typephp-org/native-core/issues",
     "source": "https://github.com/typephp-org/native-core"
   },
+  "bin": ["bin/native"],
   "require": {
     "php": ">=8.4"
   },
@@ -17,6 +18,7 @@
       "TypePHP\\NativeCore\\": "src/",
       "TypePHP\\NativeCore\\Host\\Console\\": "hosts/console/",
       "TypePHP\\NativeCore\\Host\\Daemon\\": "hosts/daemon/",
+      "TypePHP\\NativeCore\\Host\\Worker\\": "hosts/worker/",
       "TypePHP\\NativeCore\\Host\\Windows\\": "hosts/windows/"
     }
   }

@@ -6,7 +6,7 @@ The initial API is intentionally small and may receive breaking changes until
 | Area | Stable intent | Alpha types |
 |---|---|---|
 | Application | Single-use run/stop lifecycle | `Application`, `ApplicationBuilder`, `NativeApplication`, `Host` |
-| Hosts | Explicit adapters for console, daemon and Windows desktop loops | `ConsoleHost`, `ConsoleProgram`, `DaemonHost`, `DaemonWorker`, `WindowsDesktopHost`, `WindowsDesktopProgram` |
+| Hosts | Explicit adapters for console, resilient workers, daemon and Windows desktop loops | `ConsoleHost`, `ConsoleProgram`, `WorkerHost`, `Worker`, `WorkResult`, `WorkerPolicy`, `WorkerHealth`, `DaemonHost`, `DaemonWorker`, `WindowsDesktopHost`, `WindowsDesktopProgram` |
 | Modules | Explicit registration and ordered lifecycle | `Module`, `ModuleApi::VERSION` |
 | Services | Explicit factories and singleton cache | `ServiceRegistry`, `ServiceFactory` |
 | Configuration | Replaceable typed scalar source | `Config`, `ArrayConfig`, `Environment` |
@@ -53,3 +53,17 @@ must wake or close the native loop promptly and must not wait for it to finish.
 clock is corrected. `MonotonicClock::elapsedMilliseconds()` is non-decreasing
 elapsed time for animation, frame deltas, deadlines, and timeouts. Both have
 system defaults and can be replaced through `ApplicationBuilder`.
+
+## Worker execution semantics
+
+`Worker::handle()` processes one unit or polling iteration and returns an
+explicit `WorkResult`: continue with the policy delay via `next()`, continue
+after an exact delay, retry, or stop cleanly.
+`WorkerHost` converts thrown failures and retry results into bounded
+exponential backoff. A configured consecutive-failure limit returns exit code
+1; normal stop and cooperative cancellation return 0. A successful result
+resets the consecutive-failure count.
+
+`WorkerHealth` exposes state, successful run count, total/consecutive failures,
+the last error, and ready/live decisions. Exporting the in-process snapshot
+over HTTP, a service manager, or native IPC remains an adapter responsibility.

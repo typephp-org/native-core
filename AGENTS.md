@@ -76,8 +76,8 @@ build\windows\build-desktop-spike.cmd
 
 ## Local toolchain facts
 
-- The configured directory alias is `D:\DevTools\TypePHP\v0.2.3`; the compiler
-  inside currently reports TypePHP AOT `v0.5.0`.
+- The configured Windows toolchain directory is `D:\DevTools\TypePHP`;
+  the verified bundle is TypePHP AOT `v0.9.3` with PHP `8.4.26` (ZTS, x64).
 - Build scripts must continue to honor `TYPEPHP_HOME`, `PHP_HOME`, `PHPX_HOME`,
   and `VS_BUILD_TOOLS`; never bake the alias into PHP APIs.
 - `tpc` may print an embedded-path permission warning even on successful builds.

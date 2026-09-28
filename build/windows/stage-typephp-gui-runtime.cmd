@@ -11,7 +11,7 @@ for %%I in ("%~2") do set "PACKAGE_DIR=%%~fI"
 if not "%~3"=="" set "RUNTIME_DIR=%~3"
 if not defined RUNTIME_DIR if defined TYPEPHP_RUNTIME_DIR set "RUNTIME_DIR=%TYPEPHP_RUNTIME_DIR%"
 if not defined RUNTIME_DIR if defined TYPEPHP_HOME set "RUNTIME_DIR=%TYPEPHP_HOME%"
-if not defined RUNTIME_DIR set "RUNTIME_DIR=D:\DevTools\TypePHP\v0.2.3"
+if not defined RUNTIME_DIR set "RUNTIME_DIR=D:\DevTools\TypePHP"
 
 if not exist "%OUTPUT_EXE%" (
     echo ERROR: GUI executable not found: %OUTPUT_EXE%

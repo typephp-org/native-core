@@ -1,7 +1,7 @@
 name: desktop-window-spike
 version: 0.1.0
 mode: bin
-output: ../../build/artifacts/desktop-window-spike
+output: ../../build/artifacts/desktop_window_spike
 build-dir: ../../build/typephp/desktop-window-spike
 optimize: 0
 no-progress: true

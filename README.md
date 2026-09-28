@@ -6,7 +6,7 @@
 [![PHP](https://img.shields.io/badge/PHP-%3E%3D%208.4-777BB4.svg)](composer.json)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-An AOT-first, host-neutral application core for building CLI tools, workers,
+An AOT-first native application kit for building CLI tools, resilient workers,
 foreground daemons, and native Windows desktop applications with TypePHP and
 Zend PHP.
 
@@ -81,6 +81,20 @@ Install from Packagist:
 composer require typephp-org/native-core:^0.1@alpha
 ```
 
+Create a complete Worker application instead of wiring both runtimes by hand:
+
+```bash
+vendor/bin/native new:worker mail-worker MailWorker
+cd mail-worker
+composer install
+php run-zend.php
+vendor/bin/native doctor
+```
+
+The generated project contains the business Worker, Zend adapter, AOT
+`main()`, and explicit TypePHP source manifest. The `doctor` command validates
+PHP 8.4, the entrypoint, configured sources, and `TYPEPHP_HOME` when present.
+
 The Composer package contains PHP source only. It does not bundle the TypePHP
 compiler, PHPX, PHP Embed, native runtime libraries, or build tools. TypePHP
 projects must list the Core and Host source files explicitly in `project.yml`.
@@ -132,6 +146,7 @@ See [`examples/hello-console`](examples/hello-console) for the complete example.
 |---|---|---|
 | Console | Commands and one-shot tools | The program returns an exit code. |
 | Daemon | Foreground workers and service-manager processes | Work observes cooperative cancellation; service installation is external. |
+| Worker Kit | Resilient long-running jobs | Typed continue/retry/stop results, exponential backoff, failure limits and queryable health. |
 | Windows Desktop | Win32 desktop application loops | The application owns windows, messages, rendering, and native resources through `WindowsDesktopProgram`. |
 
 ## Project layout

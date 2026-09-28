@@ -73,6 +73,10 @@ generic/value semantics are available and measured.
 - `ConsoleHost`: executes one `ConsoleProgram`.
 - `DaemonHost`: foreground loop driven by `DaemonWorker`, `SignalSource` and
   `Sleeper`; process detachment remains a deployment adapter concern.
+- `WorkerHost`: resilient foreground work loop driven by typed `WorkResult`
+  values. It owns retry/backoff, terminal failure limits and a queryable
+  `WorkerHealth` snapshot while business Workers own one unit of work.
+  Exceptions become retryable work failures at this Host boundary.
 - `WindowsDesktopHost`: runs one `WindowsDesktopProgram` and connects a
   program-owned Win32 loop to cooperative Application cancellation. Native
   handles, messages, rendering and C++ bridges remain in the program adapter.

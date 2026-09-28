@@ -4,6 +4,7 @@
 /build/deps/
 /build/native/
 /build/release/
+/build/*-runtime.log
 /vendor/
 *.exe
 *.dll

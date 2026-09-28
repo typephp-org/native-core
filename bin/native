@@ -1,0 +1,6 @@
+#!/usr/bin/env php
+<?php
+
+require_once __DIR__ . '/../tools/NativeCli.php';
+
+exit((new NativeCli())->run($argv));

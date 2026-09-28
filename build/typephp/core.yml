@@ -1,7 +1,7 @@
 name: native-core-smoke
 version: 0.1.0-alpha.2
 mode: bin
-output: ../artifacts/native-core-smoke
+output: ../artifacts/native_core_smoke
 build-dir: core
 optimize: 0
 no-progress: true

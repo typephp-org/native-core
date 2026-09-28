@@ -1,6 +1,13 @@
 <?php
 
-$roots = [__DIR__ . '/../src', __DIR__ . '/../hosts', __DIR__ . '/../examples', __DIR__];
+$roots = [
+    __DIR__ . '/../src',
+    __DIR__ . '/../hosts',
+    __DIR__ . '/../examples',
+    __DIR__ . '/../tools',
+    __DIR__ . '/../bin',
+    __DIR__,
+];
 $failures = 0;
 foreach ($roots as $root) {
     $iterator = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root));

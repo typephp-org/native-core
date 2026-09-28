@@ -9,6 +9,8 @@
 - Filesystem, process-lock, PID, single-instance and transport-neutral Channel
   ports.
 - Console, foreground Daemon and reusable Windows Desktop Host contracts.
+- Resilient Worker Kit with explicit work outcomes, exponential retry,
+  failure limits, health state, project scaffolding and prerequisite diagnosis.
 - Minimal Zend examples and real TypePHP/Windows Console, Daemon, lifecycle and
   Win32 Desktop smokes.
 - Composer PSR-4 package metadata, native app template, public API docs and

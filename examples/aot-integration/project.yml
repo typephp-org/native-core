@@ -1,7 +1,7 @@
 name: aot-integration
 version: 0.1.0
 mode: bin
-output: ../../build/artifacts/aot-integration
+output: ../../build/artifacts/aot_integration
 build-dir: ../../build/typephp/aot-integration
 optimize: 0
 no-progress: true

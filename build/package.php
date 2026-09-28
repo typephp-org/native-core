@@ -18,6 +18,8 @@ if (!is_dir($releaseDir) && !mkdir($releaseDir, 0777, true) && !is_dir($releaseD
 $paths = [
     'src',
     'hosts',
+    'bin',
+    'tools',
     'examples',
     'template',
     'docs',
@@ -29,6 +31,7 @@ $paths = [
     'AGENTS.md',
     'CHANGELOG.md',
     'README.md',
+    'README.zh-CN.md',
     'SECURITY.md',
     'LICENSE',
 ];

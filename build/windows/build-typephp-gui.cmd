@@ -11,7 +11,7 @@ for %%I in ("%~2") do (
     set "OUTPUT_EXE=%%~fI"
     set "OUTPUT_DIR=%%~dpI"
 )
-if not defined TYPEPHP_HOME set "TYPEPHP_HOME=D:\DevTools\TypePHP\v0.2.3"
+if not defined TYPEPHP_HOME set "TYPEPHP_HOME=D:\DevTools\TypePHP"
 if not defined PHP_HOME set "PHP_HOME=%TYPEPHP_HOME%"
 if not defined PHPX_HOME set "PHPX_HOME=%TYPEPHP_HOME%\phpx"
 if not defined VS_BUILD_TOOLS set "VS_BUILD_TOOLS=D:\DevTools\VisualStudio\2022\BuildTools"

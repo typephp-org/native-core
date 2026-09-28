@@ -14,7 +14,8 @@ A release must pass:
 2. TypePHP Windows Core build and AOT integration run.
 3. Desktop Spike compile and smoke close.
 4. Dependency and license inventory review.
-5. Package generation and SHA-256 manifest verification.
+5. Package generation, archive contents and SHA-256 manifest verification,
+   including Composer's `bin/native` and its `tools/` implementation.
 6. `composer.json` still requires PHP 8.4 or newer, matching TypePHP.
 7. `CHANGELOG.md` and public documentation review.
 

@@ -6,16 +6,18 @@ not release promises.
 
 | Capability | Status | Evidence / boundary |
 |---|---|---|
-| Zend PHP 8.4 lint/tests | confirmed on Windows and CI-configured on Linux | PHP 8.4.24 locally, 38 assertions |
-| Composer PSR-4 autoload | confirmed | Core and Windows Host load from `vendor/autoload.php` |
+| Zend PHP 8.4 lint/tests | confirmed on Windows and CI-configured on Linux | PHP 8.4.26 from the v0.9.3 bundle, 54 assertions |
+| Composer PSR-4 autoload | confirmed | Core, Windows Host and Worker Host load from `vendor/autoload.php` |
 | Hello Console on Zend | confirmed | structured log, exit 0 |
 | Worker cancellation | confirmed | 3 ticks, exit 0 |
-| Core TypePHP translation/link/run | confirmed on Windows x64 | native Console smoke, exit 0 |
-| AOT lifecycle and service errors | confirmed on Windows x64 | 51 PHP sources, 57 C/C++ units, `PASS aot-integration` |
+| Core TypePHP translation/link/run | confirmed on Windows x64 | TypePHP v0.9.3 native Console smoke, exit 0 |
+| AOT lifecycle and service errors | confirmed on Windows x64 | TypePHP v0.9.3, 51 PHP sources, `PASS aot-integration` |
 | Application-to-Host stop forwarding | confirmed on Zend and TypePHP/Windows | at-most-once regressions and AOT integration |
 | Reusable Windows Desktop Host | confirmed on Zend and TypePHP/Windows | contract regressions plus real create/pump-3-frames/close smoke, exit 0 |
 | Monotonic elapsed clock | confirmed on Zend and TypePHP/Windows | replaceable clock regression and native `hrtime(true)` run |
-| Daemon foreground loop | confirmed on Zend and TypePHP/Windows | native smoke completed three ticks, exit 0 |
+| Legacy DaemonHost foreground loop | confirmed on Zend and earlier TypePHP/Windows toolchain | prior native smoke completed three ticks; not rerun with v0.9.3 |
+| WorkerHost loop and clean stop | confirmed on Zend and TypePHP v0.9.3/Windows | native three-iteration Worker smoke, exit 0 |
+| Worker retry, failure limit and health state | confirmed on Zend; AOT behavior unverified | automated Zend regressions; current native smoke covers normal stop only |
 | module cleanup after Host exception | confirmed | automated Zend regression |
 | duplicate/missing/cyclic services | confirmed | Zend and AOT integration |
 | Config/Event/Logger replacements | confirmed | automated Zend regressions |
