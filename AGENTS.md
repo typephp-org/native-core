@@ -92,7 +92,8 @@ build\windows\build-desktop-spike.cmd
 Zend tests, Windows TypePHP `bin` builds, AOT lifecycle integration, the
 foreground Daemon smoke test, and the reusable Win32 Desktop Host are confirmed.
 Linux TypePHP, POSIX signal runtime behavior, Windows Service, TypePHP
-`lib`/`ext`, remote CI, and a 24-72 hour stability run are not confirmed.
+`lib`/`ext`, remote TypePHP CI, and a 24-72 hour stability run are not confirmed.
+Remote Zend PHP 8.4 CI is confirmed on Ubuntu and Windows.
 TypePHP project maintainer Han Tianfeng has confirmed that TypePHP is GPL open
 source. Native Core is independently MIT and does not redistribute the compiler
 or runtime toolchain. Record the exact toolchain release and checksum, preserve
